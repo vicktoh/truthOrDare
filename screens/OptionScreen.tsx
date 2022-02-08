@@ -14,13 +14,13 @@ import Colors from "../constants/Colors";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Option">;
 
-export const OptionScreen: FC<Props> = ({ navigation }) => {
+export const OptionScreen: FC<Props> = ({ navigation, route: {params: {level}} }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.subContainer]}
         onPress={() => {
-          navigation.push("Level", { option: "truth" });
+          navigation.push("Question", { level: level, type: 'truths' });
         }}
       >
         <Text style={[styles.text, { color: Colors.light.secondaryBrown }]}>
@@ -33,7 +33,7 @@ export const OptionScreen: FC<Props> = ({ navigation }) => {
           { backgroundColor: Colors.light.mainColor },
         ]}
         onPress={() => {
-          navigation.push("Level", { option: "dare" });
+          navigation.push("Question", { level: level, type: 'dares' });
         }}
       >
         <Text style={[styles.text, { color: "white" }]}>Dare</Text>

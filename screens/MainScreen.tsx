@@ -60,7 +60,7 @@ export const MainScreen: FC<Props> = ({navigation}) => {
       <Text style = {[styles.mainText, {marginTop: 2}]}>or</Text>
       <Text style = {[styles.mainText, {marginBottom: 8}]}>Dare</Text>
       <Text style = {styles.credits}>By Alfredo and Vico</Text>
-      <TouchableOpacity style = {styles.cta} onPress= {()=> navigation.push('Option')} >
+      <TouchableOpacity style = {styles.cta} onPress= {()=> navigation.push('Level')} >
           <Text style={styles.ctaText}>start</Text>
       </TouchableOpacity>
       <TouchableOpacity style= {[styles.settingsButon]}>

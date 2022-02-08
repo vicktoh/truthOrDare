@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef } from "react";
+import React, { FC, useState, useRef, useContext } from "react";
 import {
     StyleSheet,
     Text,
@@ -11,6 +11,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types";
 import Colors from "../constants/Colors";
 import LottieView from "lottie-react-native";
+import { QuestionsContext } from '../hooks/context'
 type Question = {
     title: string;
     level: string;
@@ -23,9 +24,12 @@ type Props = NativeStackScreenProps<RootStackParamList, "Question">;
 export const QuestionScreen: FC<Props> = ({ navigation, route: { params } }) => {
     const [randomIndex, setRandomIndex] = useState(0);
     var animationRef = useRef<any>();
-    const { background, color, level: lvl, option, icon } = params;
-    let questions = option === "truth" ? truths : dares;
-    questions = questions.filter(({ level }) => level === lvl);
+    const allQuestions = useContext(QuestionsContext);
+    console.log(allQuestions)
+    const {  level: {background, textColor, value, icon}, type  } = params;
+    
+    let questions = allQuestions ?  allQuestions[type] : [];
+    questions = questions.filter(({ level }) => level.toLowerCase() === value.toLowerCase());
     const generateRandom = ()=>{
         animationRef.current.play();
         const randomNumber = Math.floor(Math.random() * questions.length);
@@ -33,14 +37,14 @@ export const QuestionScreen: FC<Props> = ({ navigation, route: { params } }) => 
     }
     return (
         <View style={[styles.container, {backgroundColor : background}]}>
-            <Text style = {[styles.title, {color}]}>{option}</Text>
+            <Text style = {[styles.title, {color: textColor}]}>{type}</Text>
             <View style={styles.subContainer}>
                 
                 <LottieView ref = {(animation)=> animationRef.current = animation} loop = {false} source = {icon} style= {styles.lottie} />
-                <Text style = {[styles.text, {color}]}>
-                    {questions[randomIndex].title}
+                <Text style = {[styles.text, {color: textColor}]}>
+                    {questions[randomIndex]?.question}
                 </Text>
-                <TouchableOpacity onPress= {generateRandom} style = {[styles.randomButton, { backgroundColor: color}]}>
+                <TouchableOpacity onPress= {generateRandom} style = {[styles.randomButton, { backgroundColor: textColor}]}>
                     <Text style = {{color: background}}>🎲 Random</Text>
                 </TouchableOpacity>
             </View>

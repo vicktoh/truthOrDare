@@ -29,6 +29,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "truth or dare Ideas for a great hangout or party",
+    "githubUrl": "https://github.com/vicktoh/truthOrDare.git"
   }
 }

@@ -14,14 +14,11 @@ declare global {
 export type RootStackParamList = {
   Main: undefined;
   Settings: undefined;
-  Option: undefined;
-  Level: {option: string};
+  Level: undefined;
+  Option: {level: Level};
   Question: {
-    option: string,
-    level: string,
-    background: string,
-    color: string,
-    icon: any
+    level: Level;
+    type: 'truths' | 'dares'
   }
 };
 
@@ -31,12 +28,22 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 >;
 
 export type Level = {
+  value: 'adult' | 'mature' | 'normal',
   title: string, 
   description: string,
   background: string,
   icon: any,
   textColor?: string
 }
+export type Question= {
+  question: string;
+  level: 'normal'| 'adult'| 'mature'
 
+}
+
+export type Questions = {
+  ['truths']: Question[];
+  ['dares'] : Question[];
+}
 
 
